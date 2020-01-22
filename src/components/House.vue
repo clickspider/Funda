@@ -4,7 +4,7 @@
       class="mx-auto house-card"
       :elevation="10"
       :shaped="true"
-      :loading="loading"
+      :loading="cardLoading"
     >
       <v-carousel
         :continuous="false"
@@ -129,22 +129,13 @@ export default {
   props: ["loading"],
   data() {
     return {
-      dialog: false
+      dialog: false,
+      imagesArr: [],
+      cardLoading: true
     };
   },
   computed: {
-    ...mapGetters(["house"]),
-
-    imagesArr() {
-      const mediaItems = this.house.data.Media.map(
-        media => media.MediaItems
-      ).flat();
-
-      const imagesArr = mediaItems
-        .filter(item => item.Category === 6)
-        .map(el => el.Url);
-      return imagesArr;
-    }
+    ...mapGetters(["house"])
   },
   methods: {
     pauseAndClose() {
@@ -153,7 +144,26 @@ export default {
 
       if (myVideo.paused) myVideo.play();
       else myVideo.pause();
+    },
+
+    filterImagesArr() {
+      const mediaItems = this.house.data.Media.map(
+        media => media.MediaItems
+      ).flat();
+
+      const imagesArr = mediaItems
+        .filter(item => item.Category === 6)
+        .map(el => el.Url);
+
+      this.imagesArr = imagesArr;
+      return imagesArr;
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.filterImagesArr();
+      this.cardLoading = false;
+    }, 5000);
   }
 };
 </script>
