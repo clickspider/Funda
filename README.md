@@ -13,7 +13,7 @@ npm run serve
 ```
 
 - The application is now running at [http://localhost:8080](http://localhost:8080)
-- In case you want to see the application live [https://tender-leakey-5104c1.netlify.com/](https://tender-leakey-5104c1.netlify.com/)
+- In case you want to see the application live [https://flamboyant-pasteur-a44926.netlify.com/](https://flamboyant-pasteur-a44926.netlify.com/)
 
 ### Demo images
 ![Stock list](image-home.png)
