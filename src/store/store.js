@@ -21,7 +21,11 @@ export const store = new Vuex.Store({
   mutations: {
     // Use this to change the data
     gotData(state, args) {
-      state.house = args;
+      if (args.statusText === "OK") {
+        state.house = args.data;
+      } else {
+        state.house = args.status;
+      }
     }
   },
 
@@ -30,7 +34,7 @@ export const store = new Vuex.Store({
     async getData({ commit }) {
       try {
         const GET_DATA = await axios.get(
-          `${CROSS}/https://partnerapi.funda.nl/feeds/Aanbod.svc/json/detail/${KEY}/koop/${ID}/`
+          `${CROSS}/http://partnerapi.funda.nl/feeds/Aanbod.svc/json/detail/${KEY}/koop/${ID}/`
         );
 
         commit("gotData", GET_DATA);

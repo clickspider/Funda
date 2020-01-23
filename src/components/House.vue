@@ -14,10 +14,16 @@
       >
         <v-carousel-item v-for="(item, i) in imagesArr" :key="i" :src="item">
           <v-card-title class="card-title">
-            {{ house.data.Plaats }}, {{ house.data.Adres }}
+            {{ house.Plaats }}, {{ house.Adres }}
             <span style="font-size: 16px;">
-              € {{ house.data.Prijs.Koopprijs }}
-              {{ house.data.Prijs.KoopAbbreviation }}
+              €
+              {{
+                house.Prijs.Koopprijs.toString().replace(
+                  /\B(?=(\d{3})+(?!\d))/g,
+                  ","
+                )
+              }}
+              {{ house.Prijs.KoopAbbreviation }}
             </span>
           </v-card-title>
         </v-carousel-item>
@@ -33,7 +39,7 @@
               >Year of construction</span
             >
             <span class="kenmerken-highlighted__details">
-              {{ house.data.Bouwjaar }}
+              {{ house.Bouwjaar }}
             </span>
           </li>
           <li class="kenmerken-highlighted__list-item">
@@ -42,14 +48,14 @@
             ></span>
             <span class="kenmerken-highlighted__term">Living area</span>
             <span class="kenmerken-highlighted__details">
-              {{ house.data.WoonOppervlakte }} m²
+              {{ house.WoonOppervlakte }} m²
             </span>
           </li>
           <li class="kenmerken-highlighted__list-item">
             <span class="kenmerken-highlighted__icon icon-door-orange"></span>
             <span class="kenmerken-highlighted__term">Number of rooms</span>
             <span class="kenmerken-highlighted__details">
-              {{ house.data.AantalKamers }}
+              {{ house.AantalKamers }}
             </span>
           </li>
           <li class="kenmerken-highlighted__list-item">
@@ -58,7 +64,7 @@
             ></span>
             <span class="kenmerken-highlighted__term">Plot size</span>
             <span class="kenmerken-highlighted__details">
-              {{ house.data.Kenmerken[5].Kenmerken[1].Waarde }}
+              {{ house.Kenmerken[5].Kenmerken[1].Waarde }}
             </span>
           </li>
         </ul>
@@ -72,7 +78,7 @@
             dark
             small
             color="orange"
-            :href="house.data.ShortURL"
+            :href="house.ShortURL"
             target="_blank"
           >
             <v-icon dark>mdi-information</v-icon>
@@ -95,10 +101,7 @@
             <v-card>
               <v-card-text class="text-center">
                 <video class="video" controls autoplay muted id="video">
-                  <source
-                    :src="house.data.Video.Videos[0].Url"
-                    type="video/mp4"
-                  />
+                  <source :src="house.Video.Videos[0].Url" type="video/mp4" />
                   Your browser does not support HTML5 video.
                 </video>
               </v-card-text>
@@ -147,9 +150,7 @@ export default {
     },
 
     filterImagesArr() {
-      const mediaItems = this.house.data.Media.map(
-        media => media.MediaItems
-      ).flat();
+      const mediaItems = this.house.Media.map(media => media.MediaItems).flat();
 
       const imagesArr = mediaItems
         .filter(item => item.Category === 6)
@@ -160,10 +161,12 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.filterImagesArr();
-      this.cardLoading = false;
-    }, 5000);
+    setTimeout(async () => {
+      if (this.house.Media) {
+        await this.filterImagesArr();
+        this.cardLoading = false;
+      }
+    }, 3000);
   }
 };
 </script>

@@ -83,14 +83,14 @@ export default {
   },
 
   created() {
-    setTimeout(() => {
+    setTimeout(async () => {
       if (this.$data.isOnline) {
-        this.getData();
+        await this.getData();
         this.loading = false;
       } else {
         this.loading = false;
       }
-    }, 2000);
+    }, 1000);
   },
 
   methods: {
