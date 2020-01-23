@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.0ba41dd9522995e28025ed6fcaa84e93.js"
+  "/precache-manifest.5b0994b2ba3eb16facbcaf4b530005d5.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "funda-app"});
