@@ -86,6 +86,7 @@ export default {
     setTimeout(async () => {
       if (this.$data.isOnline) {
         await this.getData();
+        this.filterImagesArr();
         this.loading = false;
       } else {
         this.loading = false;
@@ -94,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getData"])
+    ...mapActions(["getData", "filterImagesArr"])
   },
 
   watch: {

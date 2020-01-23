@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
   plugins: [vuexLocalStorage.plugin],
   state: {
     // Use this to store your data
-    house: []
+    house: [],
+    imagesArr: []
   },
 
   mutations: {
@@ -27,6 +28,18 @@ export const store = new Vuex.Store({
       } else {
         state.house = args.status;
       }
+    },
+
+    filterImagesArr(state) {
+      const mediaItems = state.house.Media.map(
+        media => media.MediaItems
+      ).flat();
+
+      const imagesArr = mediaItems
+        .filter(item => item.Category === 6)
+        .map(el => el.Url);
+
+      state.imagesArr = imagesArr;
     }
   },
 
@@ -42,6 +55,10 @@ export const store = new Vuex.Store({
       } catch (err) {
         commit("gotData", err);
       }
+    },
+
+    filterImagesArr({ commit }) {
+      commit("filterImagesArr");
     }
   },
 
@@ -49,6 +66,10 @@ export const store = new Vuex.Store({
     // Use this to get stored data and change it
     house: state => {
       return state.house;
+    },
+
+    imagesArr: state => {
+      return state.imagesArr;
     }
   }
 });

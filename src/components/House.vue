@@ -1,11 +1,6 @@
 <template>
   <section v-if="!loading">
-    <v-card
-      class="mx-auto house-card"
-      :elevation="10"
-      :shaped="true"
-      :loading="cardLoading"
-    >
+    <v-card class="mx-auto house-card" :elevation="10" :shaped="true">
       <v-carousel
         :continuous="false"
         :cycle="true"
@@ -132,13 +127,11 @@ export default {
   props: ["loading"],
   data() {
     return {
-      dialog: false,
-      imagesArr: [],
-      cardLoading: true
+      dialog: false
     };
   },
   computed: {
-    ...mapGetters(["house"])
+    ...mapGetters(["house", "imagesArr"])
   },
   methods: {
     pauseAndClose() {
@@ -147,26 +140,7 @@ export default {
 
       if (myVideo.paused) myVideo.play();
       else myVideo.pause();
-    },
-
-    filterImagesArr() {
-      const mediaItems = this.house.Media.map(media => media.MediaItems).flat();
-
-      const imagesArr = mediaItems
-        .filter(item => item.Category === 6)
-        .map(el => el.Url);
-
-      this.imagesArr = imagesArr;
-      return imagesArr;
     }
-  },
-  mounted() {
-    setTimeout(async () => {
-      if (this.house.Media) {
-        await this.filterImagesArr();
-        this.cardLoading = false;
-      }
-    }, 3000);
   }
 };
 </script>
