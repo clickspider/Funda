@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import axios from "axios";
 import VuexPersist from "vuex-persist";
 import { KEY, ID, CROSS } from "../data/config.js";
+// NOTE: For this app I used the keys on the Front-End side (it is not for production purposes)
 
 Vue.use(Vuex);
 
